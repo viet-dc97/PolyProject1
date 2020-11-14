@@ -23,8 +23,8 @@ public class HangXe {
 
     public String getMaHang() {
         return maHang;
-    }
-    
+    }    
+
 
     public void setMaHang(String maHang) {
         this.maHang = maHang;
