@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
  */
 public class ImageHelper {
         public static Image getAppIcon() {
-        ImageIcon img = new ImageIcon("src\\icons\\");
+        ImageIcon img = new ImageIcon("src\\icons\\logo.png");
         return img.getImage();
 //        URL url = XImage.class.getResource("src\\icons\\logo.png");
 //         return new ImageIcon(url).getImage();
