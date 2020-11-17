@@ -23,7 +23,7 @@ public class DoiMatKhauJDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         init();
-    }
+    }//hjhjhjh
     NhanVienDAO dao = new NhanVienDAO();
 
     /**
