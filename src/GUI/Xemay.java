@@ -5,9 +5,19 @@
  */
 package GUI;
 
-import javax.swing.JFrame;
+import DAO.HangXeDAO;
+import DAO.XeDAO;
+import entity.HangXe;
+import entity.Xe;
+import java.io.File;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
 import utils.Auth;
 import utils.DateHelper;
+import utils.DialogHelper;
 import utils.ImageHelper;
 
 /**
@@ -16,6 +26,10 @@ import utils.ImageHelper;
  */
 public class Xemay extends javax.swing.JFrame {
 
+    JFileChooser fileChooser = new JFileChooser("C:/Users/PC/Documents/NetBeansProjects/PolyProject1/src/images");
+    XeDAO xeDAO = new XeDAO();
+    HangXeDAO hxDAO = new HangXeDAO();
+    int row = -1;
     /**
      * Creates new form mainForm
      */
@@ -46,9 +60,9 @@ public class Xemay extends javax.swing.JFrame {
         lblstatus = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboHangXe = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblXemay = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         lblHinh = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -133,38 +147,56 @@ public class Xemay extends javax.swing.JFrame {
         jTabbedPane1.setForeground(new java.awt.Color(255, 0, 0));
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 51, 255));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 204, 0), new java.awt.Color(0, 204, 0)));
+        cboHangXe.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cboHangXe.setForeground(new java.awt.Color(0, 51, 255));
+        cboHangXe.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 204, 0), new java.awt.Color(0, 204, 0)));
+        cboHangXe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboHangXeActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblXemay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Mã xe", "Tên xe", "Mã  màu", "Mã hãng", "Số lượng", "Giá nhập", "Giá bán", "Hình"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblXemay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblXemayMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblXemay);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(585, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(310, 310, 310)
+                .addComponent(cboHangXe, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboHangXe, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addContainerGap())
@@ -173,6 +205,11 @@ public class Xemay extends javax.swing.JFrame {
         jTabbedPane1.addTab("Danh mục xe máy", jPanel3);
 
         lblHinh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+        lblHinh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblHinhMouseClicked(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 51, 255));
@@ -220,18 +257,38 @@ public class Xemay extends javax.swing.JFrame {
 
         btnFirst.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnFirst.setText("|<");
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnFirst);
 
         btnPrev.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnPrev.setText("<<");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnPrev);
 
         btnNext.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnNext);
 
         btnLast.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnLast.setText(">|");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnLast);
 
         jPanel6.setLayout(new java.awt.GridLayout(1, 0, 8, 0));
@@ -239,21 +296,41 @@ public class Xemay extends javax.swing.JFrame {
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 51, 0));
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
         jPanel6.add(btnThem);
 
         btnSua.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSua.setForeground(new java.awt.Color(255, 51, 0));
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
         jPanel6.add(btnSua);
 
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 51, 0));
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
         jPanel6.add(btnXoa);
 
         btnMoi.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnMoi.setForeground(new java.awt.Color(255, 51, 0));
         btnMoi.setText("Mới");
+        btnMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoiActionPerformed(evt);
+            }
+        });
         jPanel6.add(btnMoi);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -418,6 +495,64 @@ public class Xemay extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblXemayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblXemayMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()==2){
+            this.row = tblXemay.getSelectedRow();
+            this.edit();
+        }
+    }//GEN-LAST:event_tblXemayMouseClicked
+
+    private void cboHangXeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHangXeActionPerformed
+        // TODO add your handling code here:
+        this.fillTableByHangXe();
+    }//GEN-LAST:event_cboHangXeActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        this.insert();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
+        // TODO add your handling code here:
+        this.clearForm();
+    }//GEN-LAST:event_btnMoiActionPerformed
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        // TODO add your handling code here:
+        this.first();
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+        this.prev();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        this.next();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+        this.last();
+    }//GEN-LAST:event_btnLastActionPerformed
+
+    private void lblHinhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhMouseClicked
+        // TODO add your handling code here:
+        this.chonAnh();
+    }//GEN-LAST:event_lblHinhMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -463,6 +598,7 @@ public class Xemay extends javax.swing.JFrame {
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
+    private javax.swing.JComboBox<String> cboHangXe;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -471,7 +607,6 @@ public class Xemay extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -498,13 +633,13 @@ public class Xemay extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblHinh;
     private javax.swing.JLabel lblstatus;
     private javax.swing.JMenuItem mnuDangNhap;
     private javax.swing.JMenuItem mnuDangXuat;
     private javax.swing.JMenuItem mnuDoiMatKhau;
     private javax.swing.JMenuItem mnuThoat;
+    private javax.swing.JTable tblXemay;
     private javax.swing.JTextField txtGiaban;
     private javax.swing.JTextField txtGianhap;
     private javax.swing.JTextField txtMahang;
@@ -517,5 +652,189 @@ public class Xemay extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(ImageHelper.getAppIcon());
         lblstatus.setText("Xin chào :"+Auth.user+". Hôm nay, "+DateHelper.toString(DateHelper.now(), "dd - MM - yyyy ")+". Chúc bạn một ngày làm việc tốt lành!");
+        this.fillComboBoxHangXe();
+        this.filltable();
+    }
+    
+    
+    void chonAnh(){
+        if(fileChooser.showOpenDialog(this)== JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            ImageHelper.save(file); // lưu hình vào thư mục
+            ImageIcon icon = ImageHelper.read(file.getName());
+            lblHinh.setIcon(icon);
+            lblHinh.setToolTipText(file.getName());
+        }
+    }
+    
+    void filltable(){
+        DefaultTableModel model = (DefaultTableModel) tblXemay.getModel();
+        model.setRowCount(0);
+        try{
+            List<Xe> list = xeDAO.selectAll();
+            for(Xe xe : list){
+                Object[] row = {
+                    xe.getMaXe(),
+                    xe.getTenXe(),
+                    xe.getMaMau(),
+                    xe.getMaHang(),
+                    xe.getSoLuong(),
+                    xe.getGiaNhap(),
+                    xe.getGiaBan(),
+                    xe.getHinh()
+                };
+                model.addRow(row);
+            }
+        }catch(Exception e){
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu");
+        }
+    }
+    
+    void setForm(entity.Xe xe){
+        txtMaxe.setText(xe.getMaXe());
+        txtTenxe.setText(xe.getTenXe());
+        txtMamau.setText(xe.getMaMau());
+        txtMahang.setText(xe.getMaHang());
+        txtSoluong.setText(String.valueOf(xe.getSoLuong()));
+        txtGianhap.setText(String.valueOf(xe.getGiaNhap()));
+        txtGiaban.setText(String.valueOf(xe.getGiaBan()));
+        if(xe.getHinh()!= null){
+            lblHinh.setToolTipText(xe.getHinh());
+            lblHinh.setIcon(ImageHelper.read(xe.getHinh()));
+        }
+    }
+    
+    entity.Xe getForm(){
+        entity.Xe xe = new Xe();
+//        HangXe hx = (HangXe) cboHangXe.getSelectedItem();
+        xe.setMaXe(txtMaxe.getText());
+        xe.setTenXe(txtTenxe.getText());
+        xe.setMaMau(txtMamau.getText());
+        xe.setMaHang(txtMahang.getText());
+        xe.setSoLuong(Integer.valueOf(txtSoluong.getText()));
+        xe.setGiaNhap(Double.valueOf(txtGianhap.getText()));
+        xe.setHinh(lblHinh.getToolTipText());
+        return xe;
+    }
+    
+    void clearForm(){
+        Xe xe = new Xe();
+        this.setForm(xe);
+        this.row = -1;
+        this.updateStatus();
+    }
+    void edit(){
+        String maxe = (String) tblXemay.getValueAt(this.row, 0);
+        Xe xe = xeDAO.selectById(maxe);
+        this.setForm(xe);
+        jTabbedPane1.setSelectedIndex(1);
+        this.updateStatus();
+        
+    }
+    void insert(){
+        Xe xe = getForm();
+        try{
+            xeDAO.insert(xe);
+            this.filltable();
+            this.clearForm();
+            DialogHelper.alert(this, "thêm mới thành công");
+        }catch(Exception e){
+            DialogHelper.alert(this, "Thêm mới thất bại");
+        }
+    }
+    void update(){
+        Xe xe = getForm();
+        try{
+            xeDAO.update(xe);
+            this.filltable();
+            DialogHelper.alert(this, "Cập nhật thành công");
+        }catch(Exception e){
+            DialogHelper.alert(this, "Cập nhật thất bại");
+        }
+    }
+    void delete(){
+        if(!Auth.isManager()){
+            DialogHelper.alert(this, "Bạn không có quyền xóa xe máy");
+            
+        }
+        else{
+            String maxe = txtMaxe.getText();
+            try{
+                xeDAO.delete(maxe);
+                this.filltable();
+                this.clearForm();
+                DialogHelper.alert(this, "Xóa xe máy thành công");
+            }catch(Exception e){
+                DialogHelper.alert(this, "Xóa không thành công");
+            }
+        }
+    }
+    void first(){
+        this.row =0;
+        this.edit();
+    }
+    void prev(){
+        if(this.row >0){
+            this.row --;
+            this.edit();
+        }
+    }
+    void next(){
+        if(this.row<tblXemay.getRowCount()-1){
+            this.row++;
+            this.edit();
+        }
+    }
+    void last(){
+        this.row = tblXemay.getRowCount()-1;
+        this.edit();
+    }
+    void updateStatus() {
+        boolean edit = (this.row >= 0);
+        boolean fist = (this.row == 0);
+        boolean last = (this.row == tblXemay.getRowCount() - 1);
+        //trạng thái form
+        txtMaxe.setEditable(!edit);
+        btnThem.setEnabled(!edit);
+        btnSua.setEnabled(edit);
+        btnXoa.setEnabled(edit);
+        //trạng thái điều hướng
+        btnFirst.setEnabled(edit && !fist);
+        btnPrev.setEnabled(edit && !fist);
+        btnNext.setEnabled(edit && !last);
+        btnLast.setEnabled(edit && !last);
+
+    }
+    
+    void fillComboBoxHangXe(){
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboHangXe.getModel();
+        model.removeAllElements();
+        List<HangXe> list = hxDAO.selectAll();
+        for(HangXe hx : list){
+            model.addElement(hx);
+        }
+//        this.fillTableByHangXe();
+    }
+
+    void fillTableByHangXe(){
+        DefaultTableModel model = (DefaultTableModel) tblXemay.getModel();
+        model.setRowCount(0);
+        HangXe hx = (HangXe) cboHangXe.getSelectedItem();
+        if(hx != null){
+            List<Xe> list = xeDAO.selectByHangxe(hx.getMaHang());
+            for(int i=0; i<list.size();i++){
+                Xe xe = list.get(i);
+                model.addRow(new Object[]{
+                    xe.getMaXe(),
+                    xe.getTenXe(),
+                    xe.getMaMau(),
+                    xe.getMaHang(),
+                    xe.getSoLuong(),
+                    xe.getGiaNhap(),
+                    xe.getGiaBan(),
+                    xe.getHinh()
+                });
+            }
+        }
     }
 }
