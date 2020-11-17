@@ -52,11 +52,12 @@ public class DoiMatKhauJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(232, 232, 232));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setText("Mật khẩu mới");
 
+        jLabel1.setBackground(new java.awt.Color(232, 232, 232));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/change_password_preview.png"))); // NOI18N
 
         txtMaNv.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -77,9 +78,9 @@ public class DoiMatKhauJDialog extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("Tên đăng nhập");
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(232, 232, 232));
 
-        btnConfirm.setBackground(new java.awt.Color(255, 255, 255));
+        btnConfirm.setBackground(new java.awt.Color(232, 232, 232));
         btnConfirm.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnConfirm.setForeground(new java.awt.Color(54, 198, 244));
         btnConfirm.setText("Xác nhận");
@@ -90,7 +91,7 @@ public class DoiMatKhauJDialog extends javax.swing.JDialog {
         });
         jPanel1.add(btnConfirm);
 
-        btnCancel.setBackground(new java.awt.Color(255, 255, 255));
+        btnCancel.setBackground(new java.awt.Color(232, 232, 232));
         btnCancel.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(54, 198, 244));
         btnCancel.setText("Hủy bỏ");
@@ -112,7 +113,7 @@ public class DoiMatKhauJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 336, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtMatKhauMoi2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMaNv, javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,17 +127,17 @@ public class DoiMatKhauJDialog extends javax.swing.JDialog {
                             .addComponent(jLabel5))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGap(69, 69, 69))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel1)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtMaNv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -116,7 +116,7 @@ public class mainForm extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblstatus)
-                .addGap(0, 702, Short.MAX_VALUE))
+                .addGap(0, 707, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Hệ thống");
