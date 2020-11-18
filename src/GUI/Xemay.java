@@ -6,8 +6,10 @@
 package GUI;
 
 import DAO.HangXeDAO;
+import DAO.MauXeDAO;
 import DAO.XeDAO;
 import entity.HangXe;
+import entity.MauXe;
 import entity.Xe;
 import java.io.File;
 import java.util.List;
@@ -26,9 +28,10 @@ import utils.ImageHelper;
  */
 public class Xemay extends javax.swing.JFrame {
 
-    JFileChooser fileChooser = new JFileChooser("C:/Users/PC/Documents/NetBeansProjects/PolyProject1/src/images");
+    JFileChooser fileChooser = new JFileChooser("C:/Users/PC/Documents/NetBeansProjects/PolyProject1/src/imagesBy");
     XeDAO xeDAO = new XeDAO();
     HangXeDAO hxDAO = new HangXeDAO();
+    MauXeDAO mxDAO = new MauXeDAO();
     int row = -1;
     /**
      * Creates new form mainForm
@@ -58,11 +61,13 @@ public class Xemay extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         lblstatus = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         cboHangXe = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblXemay = new javax.swing.JTable();
+        btnDs = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         lblHinh = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -74,8 +79,6 @@ public class Xemay extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtMaxe = new javax.swing.JTextField();
         txtTenxe = new javax.swing.JTextField();
-        txtMamau = new javax.swing.JTextField();
-        txtMahang = new javax.swing.JTextField();
         txtSoluong = new javax.swing.JTextField();
         txtGianhap = new javax.swing.JTextField();
         txtGiaban = new javax.swing.JTextField();
@@ -89,6 +92,8 @@ public class Xemay extends javax.swing.JFrame {
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnMoi = new javax.swing.JButton();
+        cboMamau = new javax.swing.JComboBox<>();
+        cboMahang = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnuDangNhap = new javax.swing.JMenuItem();
@@ -144,6 +149,10 @@ public class Xemay extends javax.swing.JFrame {
         lblstatus.setForeground(new java.awt.Color(26, 167, 238));
         lblstatus.setText("jLabel1");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel1.setText("QUẢN LÝ XE MÁY");
+
         jTabbedPane1.setForeground(new java.awt.Color(255, 0, 0));
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -156,6 +165,7 @@ public class Xemay extends javax.swing.JFrame {
             }
         });
 
+        tblXemay.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tblXemay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -172,6 +182,7 @@ public class Xemay extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblXemay.setGridColor(new java.awt.Color(255, 0, 0));
         tblXemay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblXemayMouseClicked(evt);
@@ -179,18 +190,31 @@ public class Xemay extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblXemay);
 
+        btnDs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnDs.setForeground(new java.awt.Color(255, 51, 51));
+        btnDs.setText("Danh sách xe máy");
+        btnDs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(310, 310, 310)
+                .addGap(319, 319, 319)
                 .addComponent(cboHangXe, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(452, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDs, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(143, 143, 143))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +222,9 @@ public class Xemay extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(cboHangXe, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnDs, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -242,10 +268,6 @@ public class Xemay extends javax.swing.JFrame {
         txtMaxe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 255)));
 
         txtTenxe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-
-        txtMamau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-
-        txtMahang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
 
         txtSoluong.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
 
@@ -339,31 +361,32 @@ public class Xemay extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(23, 23, 23)
+                .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtMaxe)
-                    .addComponent(txtTenxe)
-                    .addComponent(txtMamau)
-                    .addComponent(txtMahang)
-                    .addComponent(txtSoluong)
-                    .addComponent(txtGianhap)
-                    .addComponent(txtGiaban))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtGianhap, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSoluong, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cboMahang, javax.swing.GroupLayout.Alignment.TRAILING, 0, 500, Short.MAX_VALUE)
+                    .addComponent(cboMamau, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTenxe, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtMaxe, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtGiaban, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
         jPanel4Layout.setVerticalGroup(
@@ -381,12 +404,12 @@ public class Xemay extends javax.swing.JFrame {
                             .addComponent(txtTenxe, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMamau, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboMamau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMahang, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboMahang))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -401,10 +424,10 @@ public class Xemay extends javax.swing.JFrame {
                             .addComponent(txtGiaban, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(lblHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Xe máy", jPanel4);
@@ -417,10 +440,15 @@ public class Xemay extends javax.swing.JFrame {
                 .addComponent(lblstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(849, 849, 849))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1052, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,9 +456,11 @@ public class Xemay extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblstatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 284, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jMenu1.setText("Hệ thống");
@@ -489,7 +519,7 @@ public class Xemay extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(481, 481, 481))
         );
 
         pack();
@@ -510,12 +540,16 @@ public class Xemay extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        this.insert();
+       if(check()){
+           this.insert();
+       }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        this.update();
+        if(check()){
+            this.update();
+        }
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -552,6 +586,11 @@ public class Xemay extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.chonAnh();
     }//GEN-LAST:event_lblHinhMouseClicked
+
+    private void btnDsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDsActionPerformed
+        // TODO add your handling code here:
+        this.filltable();
+    }//GEN-LAST:event_btnDsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -590,6 +629,7 @@ public class Xemay extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDs;
     private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnMoi;
@@ -599,6 +639,8 @@ public class Xemay extends javax.swing.JFrame {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboHangXe;
+    private javax.swing.JComboBox<String> cboMahang;
+    private javax.swing.JComboBox<String> cboMamau;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -607,6 +649,7 @@ public class Xemay extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -642,8 +685,6 @@ public class Xemay extends javax.swing.JFrame {
     private javax.swing.JTable tblXemay;
     private javax.swing.JTextField txtGiaban;
     private javax.swing.JTextField txtGianhap;
-    private javax.swing.JTextField txtMahang;
-    private javax.swing.JTextField txtMamau;
     private javax.swing.JTextField txtMaxe;
     private javax.swing.JTextField txtSoluong;
     private javax.swing.JTextField txtTenxe;
@@ -653,8 +694,28 @@ public class Xemay extends javax.swing.JFrame {
         this.setIconImage(ImageHelper.getAppIcon());
         lblstatus.setText("Xin chào :"+Auth.user+". Hôm nay, "+DateHelper.toString(DateHelper.now(), "dd - MM - yyyy ")+". Chúc bạn một ngày làm việc tốt lành!");
         this.fillComboBoxHangXe();
+        this.fillComboBoxMamau();
+        this.fillComboBoxMahang();
         this.filltable();
     }
+    void fillComboBoxMamau(){
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboMamau.getModel();
+        model.removeAllElements();
+        List<MauXe> list = mxDAO.selectAll();
+        for(MauXe mx : list){
+            model.addElement(mx);
+        }
+    }
+    void fillComboBoxMahang(){
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboMahang.getModel();
+        model.removeAllElements();
+        List<HangXe> list = hxDAO.selectAll();
+        for(HangXe hx : list){
+            model.addElement(hx);
+        }
+    }
+    
+    
     
     
     void chonAnh(){
@@ -693,8 +754,8 @@ public class Xemay extends javax.swing.JFrame {
     void setForm(entity.Xe xe){
         txtMaxe.setText(xe.getMaXe());
         txtTenxe.setText(xe.getTenXe());
-        txtMamau.setText(xe.getMaMau());
-        txtMahang.setText(xe.getMaHang());
+        cboMamau.setSelectedItem(xe.getMaMau());
+        cboMahang.setSelectedItem(xe.getMaHang());
         txtSoluong.setText(String.valueOf(xe.getSoLuong()));
         txtGianhap.setText(String.valueOf(xe.getGiaNhap()));
         txtGiaban.setText(String.valueOf(xe.getGiaBan()));
@@ -706,13 +767,15 @@ public class Xemay extends javax.swing.JFrame {
     
     entity.Xe getForm(){
         entity.Xe xe = new Xe();
-//        HangXe hx = (HangXe) cboHangXe.getSelectedItem();
+        HangXe hx = (HangXe) cboMahang.getSelectedItem();
+        MauXe mx = (MauXe) cboMamau.getSelectedItem();
         xe.setMaXe(txtMaxe.getText());
         xe.setTenXe(txtTenxe.getText());
-        xe.setMaMau(txtMamau.getText());
-        xe.setMaHang(txtMahang.getText());
+        xe.setMaMau(mx.getMaMau());
+        xe.setMaHang(hx.getMaHang());
         xe.setSoLuong(Integer.valueOf(txtSoluong.getText()));
         xe.setGiaNhap(Double.valueOf(txtGianhap.getText()));
+        xe.setGiaBan(Double.valueOf(txtGiaban.getText()));
         xe.setHinh(lblHinh.getToolTipText());
         return xe;
     }
@@ -836,5 +899,32 @@ public class Xemay extends javax.swing.JFrame {
                 });
             }
         }
+    }
+    public boolean check(){
+        
+        if(txtTenxe.getText().isEmpty() ||
+                txtSoluong.getText().isEmpty()||
+                txtGianhap.getText().isEmpty()||txtGiaban.getText().isEmpty()){
+                DialogHelper.alert(this, "Bạn chưa nhâp đủ dữ liệu");
+                return false;
+            
+        }else {
+            try{
+                int soluong = Integer.parseInt(txtSoluong.getText());
+                double gianhap = Double.parseDouble(txtGianhap.getText());
+                double giaban = Double.parseDouble(txtGiaban.getText());
+                if(soluong<=0 || gianhap <=0 || giaban <= 0){
+                    DialogHelper.alert(this, "Dữ liệu sai");
+                    return false;
+                }
+            }catch(Exception ex){
+                DialogHelper.alert(this, "Dữ liệu không đúng");
+                return false;
+                
+            }
+        }
+        
+        return true;
+        
     }
 }

@@ -16,6 +16,8 @@ public class HangXe {
     public HangXe() {
     }
 
+
+            
     public HangXe(String maHang, String tenHang) {
         this.maHang = maHang;
         this.tenHang = tenHang;
@@ -37,5 +39,10 @@ public class HangXe {
     public void setTenHang(String tenHang) {
         this.tenHang = tenHang;
     }
+    @Override
+    public String toString(){
+        return this.tenHang;
+    }
+    
     
 }

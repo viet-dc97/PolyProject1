@@ -104,7 +104,7 @@ public class XeDAO extends AbstractDAO< Xe , String>{
     }
     
     public List<Xe> selectByHangxe(String mahang){
-        String sql = "select * from Hangxe where mahang like ?";
+        String sql = "select * from xe where mahang = ?";
         return this.selectBySql(sql, mahang);
     }
     
