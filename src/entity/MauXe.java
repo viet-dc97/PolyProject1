@@ -14,6 +14,10 @@ public class MauXe {
     private String maMau;
     private String tenMau;
 
+    @Override
+    public String toString(){
+        return this.maMau;
+    }
     public MauXe(String maMau, String tenMau) {
         this.maMau = maMau;
         this.tenMau = tenMau;

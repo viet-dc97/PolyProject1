@@ -58,25 +58,18 @@ public class XeDAO extends AbstractDAO< Xe , String>{
     @Override
     protected List <Xe> selectBySql(String sqlString, Object... argsObjects) {
         List <Xe> list =  new ArrayList<>();
+        
         try{
-            ResultSet rs = JdbcHelper.query(sqlString, argsObjects);
-            
-            while(rs.next()){
-                Xe entity = new Xe();
-                entity.setMaXe(rs.getString("maxe"));
-                entity.setTenXe(rs.getString("tenxe"));
-                entity.setMaMau(rs.getString("mamau"));
-                entity.setMaHang(rs.getString("mahang"));
-                entity.setSoLuong(rs.getInt("soluong"));
-                entity.setGiaNhap(rs.getDouble("gianhap"));
-                entity.setGiaBan(rs.getDouble("giaban"));
-                entity.setHinh(rs.getString("hinh"));
-                list.add(entity);
-                
-                
+            ResultSet rs =null;
+            try{
+                rs = JdbcHelper.query(sqlString, argsObjects);
+                while(rs.next()){
+                    Xe entity = readFromResultSet(rs);
+                    list.add(entity);
+                }
+            }finally{
+                rs.getStatement().getConnection().close();
             }
-            rs.getStatement().getConnection().close();
-            
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
@@ -85,26 +78,26 @@ public class XeDAO extends AbstractDAO< Xe , String>{
 
     @Override
     protected Xe readFromResultSet(ResultSet rs) {
-//        Xe entity = new  Xe();
-//        try{
-//            entity.setMaXe(rs.getString("maxe"));
-//            entity.setTenXe(rs.getString("tenxe"));
-//            entity.setMaMau(rs.getString("mamau"));
-//            entity.setMaHang(rs.getString("mahang"));
-//            entity.setSoLuong(rs.getInt("soluong"));
-//            entity.setGiaNhap(rs.getDouble("gianhap"));
-//            entity.setGiaBan(rs.getDouble("giaban"));
-//            entity.setHinh(rs.getString("hinh"));
-//            
-//        }catch(SQLException e){
-//            throw new RuntimeException(e);
-//        }
-//        return entity;
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Xe entity = new  Xe();
+        try{
+            entity.setMaXe(rs.getString("maxe"));
+            entity.setTenXe(rs.getString("tenxe"));
+            entity.setMaMau(rs.getString("mamau"));
+            entity.setMaHang(rs.getString("mahang"));
+            entity.setSoLuong(rs.getInt("soluong"));
+            entity.setGiaNhap(rs.getDouble("gianhap"));
+            entity.setGiaBan(rs.getDouble("giaban"));
+            entity.setHinh(rs.getString("hinh"));
+            
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        return entity;
+        
     }
     
     public List<Xe> selectByHangxe(String mahang){
-        String sql = "select * from Hangxe where mahang like ?";
+        String sql = "select * from xe where mahang = ?";
         return this.selectBySql(sql, mahang);
     }
     
