@@ -18,7 +18,7 @@ import utils.JdbcHelper;
  *
  * @author ADMIN
  */
-public class PhieuXuatChiTietDAO extends AbstractDAO<PhieuXuatChiTiet, Integer>{
+public class PhieuXuatChiTietDAO extends AbstractDAO<PhieuXuatChiTiet, String>{
 
     @Override
     public void insert(PhieuXuatChiTiet entity) {
@@ -35,13 +35,13 @@ public class PhieuXuatChiTietDAO extends AbstractDAO<PhieuXuatChiTiet, Integer>{
     }
 
     @Override
-    public void delete(Integer maPhieuXuat) {
+    public void delete(String maPhieuXuat) {
         String sql = "DELETE FROM phieuxuatchitiet where maphieuxuat = ?";
         JdbcHelper.update(sql, maPhieuXuat);
     }
 
     @Override
-    public PhieuXuatChiTiet selectById(Integer maPhieuXuat) {
+    public PhieuXuatChiTiet selectById(String maPhieuXuat) {
         String sql = "SELECT * FROM phieuxuatchitiet where maphieuxuat = ?";
         List<PhieuXuatChiTiet> list = selectBySql(sql, maPhieuXuat);
         return list.size()>0 ? list.get(0) : null;
@@ -76,7 +76,7 @@ public class PhieuXuatChiTietDAO extends AbstractDAO<PhieuXuatChiTiet, Integer>{
     protected PhieuXuatChiTiet readFromResultSet(ResultSet rs) {
         PhieuXuatChiTiet entity = new PhieuXuatChiTiet();
         try {           
-            entity.setMaPhieuXuat(rs.getInt(1));
+            entity.setMaPhieuXuat(rs.getString(1));
             entity.setMaXe(rs.getString(2));
             entity.setSoLuong(rs.getInt(3));
             entity.setGiaXuat(rs.getDouble(4));

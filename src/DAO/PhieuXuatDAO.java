@@ -18,12 +18,12 @@ import utils.JdbcHelper;
  *
  * @author ADMIN
  */
-public class PhieuXuatDAO extends AbstractDAO<PhieuXuat, Integer>{
+public class PhieuXuatDAO extends AbstractDAO<PhieuXuat, String>{
 
     @Override
     public void insert(PhieuXuat entity) {
-        String sql = "INSERT INTO phieuxuat (manv, makh, ngayxuat, tongtien) VALUES (?,?,?,?)";
-        JdbcHelper.update(sql, entity.getMaNv(), entity.getMaKh(),
+        String sql = "INSERT INTO phieuxuat (maphieuxuat,manv, makh, ngayxuat, tongtien) VALUES (?,?,?,?)";
+        JdbcHelper.update(sql,entity.getMaPhieuXuat(), entity.getMaNv(), entity.getMaKh(),
                 entity.getNgayXuat(), entity.getTongTien());
     }
 
@@ -35,13 +35,13 @@ public class PhieuXuatDAO extends AbstractDAO<PhieuXuat, Integer>{
     }
 
     @Override
-    public void delete(Integer maPhieuXuat) {
+    public void delete(String maPhieuXuat) {
         String sql = "DELETE FROM phieuxuat where maphieuxuat = ?";
         JdbcHelper.update(sql, maPhieuXuat);
     }
 
     @Override
-    public PhieuXuat selectById(Integer maPhieuXuat) {
+    public PhieuXuat selectById(String maPhieuXuat) {
         String sql = "SELECT * FROM phieuxuat where maphieuxuat = ?";
         List<PhieuXuat> list = selectBySql(sql, maPhieuXuat);
         return list.size()>0 ? list.get(0) : null;
@@ -76,7 +76,7 @@ public class PhieuXuatDAO extends AbstractDAO<PhieuXuat, Integer>{
     protected PhieuXuat readFromResultSet(ResultSet rs) {
         PhieuXuat entity = new PhieuXuat();
         try {           
-            entity.setMaPhieuXuat(rs.getInt(1));
+            entity.setMaPhieuXuat(rs.getString(1));
             entity.setMaNv(rs.getString(2));
             entity.setMaKh(rs.getString(3));
             entity.setNgayXuat(rs.getDate(4));
