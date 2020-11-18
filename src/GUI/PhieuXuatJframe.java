@@ -5,17 +5,28 @@
  */
 package GUI;
 
+import DAO.KhachHangDAO;
 import DAO.MauXeDAO;
+import DAO.NhanVienDAO;
+import DAO.PhieuXuatChiTietDAO;
+import DAO.PhieuXuatDAO;
 import DAO.XeDAO;
+import entity.KhachHang;
 import entity.MauXe;
+import entity.NhanVien;
+import entity.PhieuXuat;
+import entity.PhieuXuatChiTiet;
 import entity.Xe;
 import java.awt.Color;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 import utils.Auth;
 import utils.DateHelper;
+import utils.DialogHelper;
 import utils.ImageHelper;
 
 /**
@@ -33,6 +44,10 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
     }
     MauXeDAO mauXeDAO = new MauXeDAO();
     XeDAO xeDAO = new XeDAO();
+    NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    KhachHangDAO khachHangDAO = new KhachHangDAO();
+    PhieuXuatChiTietDAO pxctDAO = new PhieuXuatChiTietDAO();
+    PhieuXuatDAO pxDAO = new PhieuXuatDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,23 +81,23 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboNhanVien = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTenNV = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cboKhachHang = new javax.swing.JComboBox<>();
         jPanel15 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtTenKH = new javax.swing.JTextField();
         jPanel16 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtSdtKH = new javax.swing.JTextField();
         jPanel17 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtDiaChiKH = new javax.swing.JTextField();
         pnHoaDonChiTiet = new javax.swing.JPanel();
         pnTtSP = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
@@ -103,21 +118,21 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jSpinField1 = new com.toedter.components.JSpinField();
+        spinSoLuong = new com.toedter.components.JSpinField();
         lblDonGia = new javax.swing.JLabel();
         jPanel26 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        tblThanhTien = new javax.swing.JTextField();
+        txtThanhTien = new javax.swing.JTextField();
         jPanel21 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JTextField();
         pnButton = new javax.swing.JPanel();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        btnTaoMoiHD = new javax.swing.JButton();
+        btnLuuHD = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         pnTimKiem = new javax.swing.JPanel();
@@ -183,6 +198,7 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         lblHoaDonBanHang.setForeground(new java.awt.Color(227, 106, 121));
         lblHoaDonBanHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHoaDonBanHang.setText("HÓA ĐƠN BÁN HÀNG");
+        lblHoaDonBanHang.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 82, 134), 1, true));
         lblHoaDonBanHang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         pnThongTinBanHang.setPreferredSize(new java.awt.Dimension(1000, 217));
@@ -201,7 +217,7 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
 
         txtMaHoaDon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtMaHoaDon.setForeground(new java.awt.Color(59, 82, 134));
-        txtMaHoaDon.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMaHoaDon.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtMaHoaDon.setEnabled(false);
         jPanel11.add(txtMaHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
 
@@ -228,10 +244,20 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel3.setText("Mã nhân viên");
         jPanel8.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 49));
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(59, 82, 134));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel8.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
+        cboNhanVien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cboNhanVien.setForeground(new java.awt.Color(59, 82, 134));
+        cboNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboNhanVien.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboNhanVienItemStateChanged(evt);
+            }
+        });
+        cboNhanVien.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cboNhanVienPropertyChange(evt);
+            }
+        });
+        jPanel8.add(cboNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
 
         jPanel6.add(jPanel8);
 
@@ -242,13 +268,13 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel4.setText("Tên nhân viên");
         jPanel10.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 49));
 
-        jTextField1.setEditable(false);
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(59, 82, 134));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("jTextField1");
-        jTextField1.setEnabled(false);
-        jPanel10.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
+        txtTenNV.setEditable(false);
+        txtTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTenNV.setForeground(new java.awt.Color(59, 82, 134));
+        txtTenNV.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtTenNV.setText("jTextField1");
+        txtTenNV.setEnabled(false);
+        jPanel10.add(txtTenNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
 
         jPanel6.add(jPanel10);
 
@@ -265,10 +291,20 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel11.setText("Mã khách hàng");
         jPanel14.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 49));
 
-        jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox3.setForeground(new java.awt.Color(59, 82, 134));
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel14.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
+        cboKhachHang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cboKhachHang.setForeground(new java.awt.Color(59, 82, 134));
+        cboKhachHang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboKhachHang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboKhachHangItemStateChanged(evt);
+            }
+        });
+        cboKhachHang.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cboKhachHangPropertyChange(evt);
+            }
+        });
+        jPanel14.add(cboKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
 
         jPanel12.add(jPanel14);
 
@@ -279,13 +315,13 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel12.setText("Tên khách hàng");
         jPanel15.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 49));
 
-        jTextField6.setEditable(false);
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(59, 82, 134));
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("jTextField1");
-        jTextField6.setEnabled(false);
-        jPanel15.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
+        txtTenKH.setEditable(false);
+        txtTenKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTenKH.setForeground(new java.awt.Color(59, 82, 134));
+        txtTenKH.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtTenKH.setText("jTextField1");
+        txtTenKH.setEnabled(false);
+        jPanel15.add(txtTenKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
 
         jPanel12.add(jPanel15);
 
@@ -296,11 +332,11 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel13.setText("Số điện thoại");
         jPanel16.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 49));
 
-        jTextField7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(59, 82, 134));
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setEnabled(false);
-        jPanel16.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
+        txtSdtKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSdtKH.setForeground(new java.awt.Color(59, 82, 134));
+        txtSdtKH.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtSdtKH.setEnabled(false);
+        jPanel16.add(txtSdtKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
 
         jPanel12.add(jPanel16);
 
@@ -311,11 +347,11 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel14.setText("Địa chỉ");
         jPanel17.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 49));
 
-        jTextField8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(59, 82, 134));
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setEnabled(false);
-        jPanel17.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
+        txtDiaChiKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtDiaChiKH.setForeground(new java.awt.Color(59, 82, 134));
+        txtDiaChiKH.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtDiaChiKH.setEnabled(false);
+        jPanel17.add(txtDiaChiKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 390, 30));
 
         jPanel12.add(jPanel17);
 
@@ -343,6 +379,11 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         cboMauXe.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboMauXeItemStateChanged(evt);
+            }
+        });
+        cboMauXe.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cboMauXePropertyChange(evt);
             }
         });
 
@@ -373,7 +414,6 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
 
         txtTenXe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTenXe.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtTenXe.setText("jTextField4");
         txtTenXe.setEnabled(false);
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
@@ -440,6 +480,11 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         cboMaXe.setForeground(new java.awt.Color(59, 82, 134));
         cboMaXe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboMaXe.setToolTipText("");
+        cboMaXe.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboMaXeItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -476,9 +521,12 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel18.setText("X");
         jLabel18.setToolTipText("");
 
-        jSpinField1.setForeground(new java.awt.Color(59, 82, 134));
-        jSpinField1.setToolTipText("");
-        jSpinField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spinSoLuong.setToolTipText("");
+        spinSoLuong.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                spinSoLuongPropertyChange(evt);
+            }
+        });
 
         lblDonGia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblDonGia.setForeground(new java.awt.Color(59, 82, 134));
@@ -493,7 +541,7 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jSpinField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(spinSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel18)
                 .addGap(18, 18, 18)
@@ -511,7 +559,7 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
                 .addComponent(lblDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel25Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSpinField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spinSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -522,10 +570,10 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         jLabel15.setText("Thành tiền");
         jLabel15.setToolTipText("");
 
-        tblThanhTien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tblThanhTien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tblThanhTien.setText("jTextField5");
-        tblThanhTien.setEnabled(false);
+        txtThanhTien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtThanhTien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtThanhTien.setText("jTextField5");
+        txtThanhTien.setEnabled(false);
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
@@ -534,14 +582,14 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tblThanhTien, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                .addComponent(txtThanhTien, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tblThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 7, Short.MAX_VALUE))
         );
 
@@ -551,15 +599,25 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
 
         jPanel21.setLayout(new java.awt.GridLayout(2, 0, 10, 10));
 
-        jButton9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(26, 167, 238));
-        jButton9.setText("Thêm");
-        jPanel21.add(jButton9);
+        btnThem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnThem.setForeground(new java.awt.Color(26, 167, 238));
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+        jPanel21.add(btnThem);
 
-        jButton10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(26, 167, 238));
-        jButton10.setText("Xóa");
-        jPanel21.add(jButton10);
+        btnXoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnXoa.setForeground(new java.awt.Color(26, 167, 238));
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+        jPanel21.add(btnXoa);
 
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -577,14 +635,26 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tblSanPham.setToolTipText("Nháy đúp vào hàng muốn xóa để xóa");
         tblSanPham.setRowHeight(25);
         tblSanPham.setRowMargin(4);
+        tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSanPhamMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSanPham);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -594,20 +664,30 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         txtTongTien.setEditable(false);
         txtTongTien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTongTien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtTongTien.setText("jTextField2");
+        txtTongTien.setText("0.0");
         txtTongTien.setEnabled(false);
 
-        pnButton.setLayout(new java.awt.GridLayout());
+        pnButton.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(26, 167, 238));
-        jButton11.setText("Tạo mới hóa đơn");
-        pnButton.add(jButton11);
+        btnTaoMoiHD.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnTaoMoiHD.setForeground(new java.awt.Color(26, 167, 238));
+        btnTaoMoiHD.setText("Tạo mới hóa đơn");
+        btnTaoMoiHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoMoiHDActionPerformed(evt);
+            }
+        });
+        pnButton.add(btnTaoMoiHD);
 
-        jButton12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(26, 167, 238));
-        jButton12.setText("Lưu hóa đơn");
-        pnButton.add(jButton12);
+        btnLuuHD.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLuuHD.setForeground(new java.awt.Color(26, 167, 238));
+        btnLuuHD.setText("Lưu hóa đơn");
+        btnLuuHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLuuHDActionPerformed(evt);
+            }
+        });
+        pnButton.add(btnLuuHD);
 
         jButton14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton14.setForeground(new java.awt.Color(26, 167, 238));
@@ -629,7 +709,7 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(pnHoaDonChiTietLayout.createSequentialGroup()
                         .addComponent(pnTtSP, javax.swing.GroupLayout.PREFERRED_SIZE, 967, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnHoaDonChiTietLayout.createSequentialGroup()
@@ -678,7 +758,7 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         pnTimKiemLayout.setHorizontalGroup(
             pnTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTimKiemLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(19, 19, 19)
                 .addComponent(txtTimMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(btnTimMaHoaDon)
@@ -741,7 +821,7 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblstatus)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE))
+                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Hệ thống");
@@ -816,10 +896,109 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimMaHoaDonFocusLost
 
     private void cboMauXeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMauXeItemStateChanged
-        // TODO add your handling code here:
-        this.fillCboMaXe();
-
+        try {
+            this.fillCboMaXe();
+            spinSoLuong.setValue(1);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_cboMauXeItemStateChanged
+
+    private void cboMauXePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cboMauXePropertyChange
+        // TODO add your handling code here:
+        try {
+            this.fillCboMauxe();
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cboMauXePropertyChange
+
+    private void cboMaXeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMaXeItemStateChanged
+        // TODO add your handling code here:
+        try {
+            spinSoLuong.setValue(1);
+            this.setThongTinXe();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cboMaXeItemStateChanged
+
+    private void spinSoLuongPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spinSoLuongPropertyChange
+        // TODO add your handling code here:
+        try {
+            double donGia = Double.parseDouble(lblDonGia.getText());
+            int soLuong = spinSoLuong.getValue();
+            txtThanhTien.setText(String.valueOf(donGia * soLuong));
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_spinSoLuongPropertyChange
+
+    private void cboNhanVienPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cboNhanVienPropertyChange
+        // TODO add your handling code here:
+        try {
+            this.fillCboNhanVien();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cboNhanVienPropertyChange
+
+    private void cboKhachHangPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cboKhachHangPropertyChange
+        // TODO add your handling code here:
+        try {
+            this.fillCboKhachHang();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cboKhachHangPropertyChange
+
+    private void cboNhanVienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboNhanVienItemStateChanged
+        // TODO add your handling code here:
+        try {
+            this.setThongTinNhanVien();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cboNhanVienItemStateChanged
+
+    private void cboKhachHangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboKhachHangItemStateChanged
+        // TODO add your handling code here:
+        try {
+            this.setThongTinKhachHang();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cboKhachHangItemStateChanged
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        themSP();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            this.xoaSP();
+        }
+    }//GEN-LAST:event_tblSanPhamMouseClicked
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        try {
+            this.xoaSP();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnTaoMoiHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoMoiHDActionPerformed
+        // TODO add your handling code here:
+        clear();
+    }//GEN-LAST:event_btnTaoMoiHDActionPerformed
+
+    private void btnLuuHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuHDActionPerformed
+        // TODO add your handling code here:
+        try {
+            this.luuHoaDon();
+            this.luuHoaDonChiTiet();
+            clear();
+            DialogHelper.alert(this, "Lưu hóa đơn thành công!!!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lưu hóa đơn không thành công!!!");
+        }
+    }//GEN-LAST:event_btnLuuHDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -860,13 +1039,16 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLuuHD;
+    private javax.swing.JButton btnTaoMoiHD;
+    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimMaHoaDon;
+    private javax.swing.JButton btnXoa;
+    private javax.swing.JComboBox<String> cboKhachHang;
     private javax.swing.JComboBox<String> cboMaXe;
     private javax.swing.JComboBox<String> cboMauXe;
+    private javax.swing.JComboBox<String> cboNhanVien;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
@@ -876,9 +1058,6 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox3;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -929,11 +1108,6 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private com.toedter.components.JSpinField jSpinField1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lblDonGia;
     private javax.swing.JLabel lblHoaDonBanHang;
     private javax.swing.JLabel lblstatus;
@@ -948,11 +1122,16 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
     private javax.swing.JPanel pnTimKiem;
     private javax.swing.JPanel pnToolbar;
     private javax.swing.JPanel pnTtSP;
+    private com.toedter.components.JSpinField spinSoLuong;
     private javax.swing.JTable tblSanPham;
-    private javax.swing.JTextField tblThanhTien;
+    private javax.swing.JTextField txtDiaChiKH;
     private javax.swing.JTextField txtMaHoaDon;
+    private javax.swing.JTextField txtSdtKH;
     private javax.swing.JTextField txtSoLuongCon;
+    private javax.swing.JTextField txtTenKH;
+    private javax.swing.JTextField txtTenNV;
     private javax.swing.JTextField txtTenXe;
+    private javax.swing.JTextField txtThanhTien;
     private javax.swing.JTextField txtTimMaHoaDon;
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
@@ -960,8 +1139,15 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(ImageHelper.getAppIcon());
         lblstatus.setText("Xin chào :" + Auth.user + ". Hôm nay, " + DateHelper.toString(DateHelper.now(), "dd - MM - yyyy ") + ". Chúc bạn một ngày làm việc tốt lành!!!!!!!  ");
-        this.fillCboMauxe();
-//        this.fillCboMaXe();
+        initMaHoaDon();
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        model.setRowCount(0);
+    }
+
+    private void initMaHoaDon() {
+        Date c = DateHelper.now();
+        String b = DateHelper.toString(c, "yyyyMMddHHmmss");
+        txtMaHoaDon.setText("HD" + b);
     }
 
     private void fillCboMauxe() {
@@ -983,6 +1169,112 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
                 model.addElement(xe.getMaXe());
             }
         }
+    }
 
+    private void setThongTinXe() {
+        String maXe = (String) cboMaXe.getSelectedItem();
+        if (maXe != null) {
+            Xe xe = xeDAO.selectById(maXe);
+            txtTenXe.setText(xe.getTenXe());
+            txtSoLuongCon.setText(String.valueOf(xe.getSoLuong()));
+            spinSoLuong.setMaximum(xe.getSoLuong());
+            lblDonGia.setText(String.valueOf(xe.getGiaBan()));
+        }
+    }
+
+    private void fillCboNhanVien() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboNhanVien.getModel();
+        model.removeAllElements();
+        List<NhanVien> list = nhanVienDAO.selectAll();
+        for (NhanVien nv : list) {
+            model.addElement(nv.getMaNv());
+        }
+    }
+
+    private void fillCboKhachHang() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhachHang.getModel();
+        model.removeAllElements();
+        List<KhachHang> list = khachHangDAO.selectAll();
+        for (KhachHang kh : list) {
+            model.addElement(kh.getMaKh());
+        }
+    }
+
+    private void setThongTinNhanVien() {
+        String maNv = (String) cboNhanVien.getSelectedItem();
+        if (maNv != null) {
+            NhanVien nv = nhanVienDAO.selectById(maNv);
+            txtTenNV.setText(nv.getHoTen());
+        }
+    }
+
+    private void setThongTinKhachHang() {
+        String maKh = (String) cboKhachHang.getSelectedItem();
+        if (maKh != null) {
+            KhachHang kh = khachHangDAO.selectById(maKh);
+            txtTenKH.setText(kh.getHoTen());
+            txtSdtKH.setText(kh.getSoDt());
+            txtDiaChiKH.setText(kh.getDiaChi());
+        }
+    }
+
+    private void themSP() {
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        String maXe = (String) cboMaXe.getSelectedItem();
+        String tenXe = txtTenXe.getText();
+        String mauXe = (String) cboMauXe.getSelectedItem();
+        int soLuong = spinSoLuong.getValue();
+        Double donGia = Double.parseDouble(lblDonGia.getText());
+        Double thanhTien = Double.parseDouble(txtThanhTien.getText());
+        Object[] row = {maXe, tenXe, mauXe, soLuong, donGia, thanhTien};
+        model.addRow(row);
+        double tt = Double.parseDouble(txtTongTien.getText());
+        txtTongTien.setText(String.valueOf(tt + thanhTien));
+    }
+
+    private void xoaSP() {
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        int i = tblSanPham.getSelectedRow();
+        double tt = Double.parseDouble(txtTongTien.getText());
+        double thanhTien = (double) tblSanPham.getValueAt(i, 5);
+        txtTongTien.setText(String.valueOf(tt - thanhTien));
+        model.removeRow(i);
+    }
+
+    private void luuHoaDon() {
+        try {
+            PhieuXuat px = new PhieuXuat();
+            px.setMaPhieuXuat(txtMaHoaDon.getText());
+            px.setMaNv(String.valueOf(cboNhanVien.getSelectedItem()));
+            px.setMaKh(String.valueOf(cboKhachHang.getSelectedItem()));
+            px.setNgayXuat(jDateChooser1.getDate());
+            px.setTongTien(Double.parseDouble(txtTongTien.getText()));
+            pxDAO.insert(px);
+        } catch (Exception e) {
+        }
+
+    }
+
+    private void luuHoaDonChiTiet() {
+        try {
+            int n = tblSanPham.getRowCount();
+            for (int i = 0; i < n; i++) {
+                PhieuXuatChiTiet pxct = new PhieuXuatChiTiet();
+                pxct.setMaPhieuXuat(txtMaHoaDon.getText());
+                pxct.setMaXe((String) tblSanPham.getValueAt(i, 0));
+                pxct.setGiaXuat((double) tblSanPham.getValueAt(i, 4));
+                pxct.setSoLuong((int) tblSanPham.getValueAt(i, 3));
+                pxctDAO.insert(pxct);
+                xeDAO.updateSoLuong(pxct.getMaXe(), pxct.getSoLuong());
+            }
+        } catch (Exception e) {
+        }
+    }
+    private void clear(){
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        model.setRowCount(0);
+        initMaHoaDon();
+        cboKhachHang.setSelectedIndex(0);
+        cboNhanVien.setSelectedIndex(0);
     }
 }

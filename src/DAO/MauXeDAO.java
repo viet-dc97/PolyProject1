@@ -73,8 +73,8 @@ public class MauXeDAO extends AbstractDAO<MauXe, String>{
     protected MauXe readFromResultSet(ResultSet rs) {
         MauXe entity = new MauXe();
         try {
-            entity.setMaMau(rs.getString("mamau"));
-            entity.setTenMau(rs.getString("tenmau"));
+            entity.setMaMau(rs.getString(1));
+            entity.setTenMau(rs.getString(2));
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

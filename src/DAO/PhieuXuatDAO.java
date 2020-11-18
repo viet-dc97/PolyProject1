@@ -22,9 +22,8 @@ public class PhieuXuatDAO extends AbstractDAO<PhieuXuat, String>{
 
     @Override
     public void insert(PhieuXuat entity) {
-        String sql = "INSERT INTO phieuxuat (maphieuxuat,manv, makh, ngayxuat, tongtien) VALUES (?,?,?,?)";
-        JdbcHelper.update(sql,entity.getMaPhieuXuat(), entity.getMaNv(), entity.getMaKh(),
-                entity.getNgayXuat(), entity.getTongTien());
+        String sql = "INSERT INTO phieuxuat (maphieuxuat,manv, makh, ngayxuat, tongtien) VALUES (?,?,?,?,?)";
+        JdbcHelper.update(sql, entity.getMaPhieuXuat(), entity.getMaNv(), entity.getMaKh(), entity.getNgayXuat(), entity.getTongTien());
     }
 
     @Override
