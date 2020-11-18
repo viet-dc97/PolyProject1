@@ -108,4 +108,9 @@ public class XeDAO extends AbstractDAO< Xe , String>{
         return this.selectBySql(sql, mahang);
     }
     
+    public List<Xe> selectByMauXe(String mauXe){
+        String sql = "select * from xe where mamau like '%?%'";
+        return this.selectBySql(sql, mauXe);
+    }
+    
 }

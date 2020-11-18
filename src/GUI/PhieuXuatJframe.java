@@ -6,7 +6,9 @@
 package GUI;
 
 import DAO.MauXeDAO;
+import DAO.XeDAO;
 import entity.MauXe;
+import entity.Xe;
 import java.awt.Color;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,8 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         initComponents();
         init();
     }
+    MauXeDAO mauXeDAO = new MauXeDAO();
+    XeDAO xeDAO = new XeDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -336,6 +340,11 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         cboMauXe.setForeground(new java.awt.Color(59, 82, 134));
         cboMauXe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboMauXe.setToolTipText("");
+        cboMauXe.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboMauXeItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -806,6 +815,12 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTimMaHoaDonFocusLost
 
+    private void cboMauXeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMauXeItemStateChanged
+        // TODO add your handling code here:
+        this.fillCboMaXe();
+
+    }//GEN-LAST:event_cboMauXeItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -946,9 +961,9 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
         this.setIconImage(ImageHelper.getAppIcon());
         lblstatus.setText("Xin chào :" + Auth.user + ". Hôm nay, " + DateHelper.toString(DateHelper.now(), "dd - MM - yyyy ") + ". Chúc bạn một ngày làm việc tốt lành!!!!!!!  ");
         this.fillCboMauxe();
+//        this.fillCboMaXe();
     }
-    MauXeDAO mauXeDAO = new MauXeDAO();
-    
+
     private void fillCboMauxe() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboMauXe.getModel();
         model.removeAllElements();
@@ -957,12 +972,17 @@ public class PhieuXuatJframe extends javax.swing.JFrame {
             model.addElement(mauXe.getMaMau());
         }
     }
+
     private void fillCboMaXe() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboMaXe.getModel();
         model.removeAllElements();
-        List<MauXe> list = mauXeDAO.selectAll();
-        for (MauXe mauXe : list) {
-            model.addElement(mauXe.getMaMau());
+        String mauXe = (String) cboMauXe.getSelectedItem();
+        if (mauXe != null) {
+            List<Xe> list = xeDAO.selectByMauXe(mauXe);
+            for (Xe xe : list) {
+                model.addElement(xe.getMaXe());
+            }
         }
+
     }
 }
