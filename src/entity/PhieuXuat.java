@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class PhieuXuat {
 
-    private int maPhieuXuat;
+    private String maPhieuXuat;
     private String maNv;
     private String maKh;
     private Date ngayXuat;
@@ -22,7 +22,7 @@ public class PhieuXuat {
     public PhieuXuat() {
     }
 
-    public PhieuXuat(int maPhieuXuat, String maNv, String maKh, Date ngayXuat, double tongTien) {
+    public PhieuXuat(String maPhieuXuat, String maNv, String maKh, Date ngayXuat, double tongTien) {
         this.maPhieuXuat = maPhieuXuat;
         this.maNv = maNv;
         this.maKh = maKh;
@@ -30,11 +30,11 @@ public class PhieuXuat {
         this.tongTien = tongTien;
     }
 
-    public int getMaPhieuXuat() {
+    public String getMaPhieuXuat() {
         return maPhieuXuat;
     }
 
-    public void setMaPhieuXuat(int maPhieuXuat) {
+    public void setMaPhieuXuat(String maPhieuXuat) {
         this.maPhieuXuat = maPhieuXuat;
     }
 

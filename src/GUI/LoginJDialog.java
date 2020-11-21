@@ -91,7 +91,7 @@ public class LoginJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 255, 0));
 
-        jPanel2.setBackground(new java.awt.Color(195, 199, 198));
+        jPanel2.setBackground(new java.awt.Color(232, 232, 232));
 
         lblImageLogo.setBackground(new java.awt.Color(255, 255, 255));
         lblImageLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

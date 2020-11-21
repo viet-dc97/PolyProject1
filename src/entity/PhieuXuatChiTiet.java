@@ -11,7 +11,7 @@ package entity;
  */
 public class PhieuXuatChiTiet {
 
-    private int maPhieuXuat;
+    private String maPhieuXuat;
     private String maXe;
     private int soLuong;
     private double giaXuat;
@@ -19,18 +19,18 @@ public class PhieuXuatChiTiet {
     public PhieuXuatChiTiet() {
     }
 
-    public PhieuXuatChiTiet(int maPhieuXuat, String maXe, int soLuong, double giaXuat) {
+    public PhieuXuatChiTiet(String maPhieuXuat, String maXe, int soLuong, double giaXuat) {
         this.maPhieuXuat = maPhieuXuat;
         this.maXe = maXe;
         this.soLuong = soLuong;
         this.giaXuat = giaXuat;
     }
 
-    public int getMaPhieuXuat() {
+    public String getMaPhieuXuat() {
         return maPhieuXuat;
     }
 
-    public void setMaPhieuXuat(int maPhieuXuat) {
+    public void setMaPhieuXuat(String maPhieuXuat) {
         this.maPhieuXuat = maPhieuXuat;
     }
 
