@@ -52,6 +52,10 @@ public class PhieuXuatChiTietDAO extends AbstractDAO<PhieuXuatChiTiet, String>{
         String sql = "SELECT * FROM phieuxuatchitiet";
         return selectBySql(sql);
     }
+    public List<PhieuXuatChiTiet> selectByMaPX(String maPhieuXuat) {
+        String sql = "SELECT * FROM phieuxuatchitiet where maphieuxuat = ?";
+        return selectBySql(sql, maPhieuXuat);
+    }
 
     @Override
     protected List<PhieuXuatChiTiet> selectBySql(String sqlString, Object... argsObjects) {

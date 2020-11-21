@@ -89,5 +89,9 @@ public class NhanVienDAO extends AbstractDAO<NhanVien, String>{
         }
         return entity;
     }
+        public List<NhanVien> SelectByKeyword(String keyword) {
+        String sql = "SELECT * FROM nhanvien WHERE hoten LIKE ?";
+        return selectBySql(sql, "%" + keyword + "%");
+    }
     
 }
