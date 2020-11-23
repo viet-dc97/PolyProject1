@@ -73,7 +73,7 @@ public class PhieuNhapChiTietDAO extends AbstractDAO<PhieuNhapChiTiet, String>{
     protected PhieuNhapChiTiet readFromResultSet(ResultSet rs) {
         PhieuNhapChiTiet entity = new PhieuNhapChiTiet();
         try {
-            entity.setMaPhieuNhap(rs.getInt("maphieunhap"));
+            entity.setMaPhieuNhap(rs.getString("maphieunhap"));
             entity.setMaXe(rs.getString("maxe"));
             entity.setSoLuong(rs.getInt("soluong"));
             entity.setGiaNhap(rs.getDouble("gianhap"));
@@ -87,6 +87,9 @@ public class PhieuNhapChiTietDAO extends AbstractDAO<PhieuNhapChiTiet, String>{
         JdbcHelper.update(sql, entity.getSoLuong());
     }
     
-    
+    public List<PhieuNhapChiTiet> selectByMaPN(String maPN) {
+        String sql = "SELECT * FROM phieunhapchitiet where maphieunhap = ?";
+        return selectBySql(sql, maPN);
+    }
     
 }

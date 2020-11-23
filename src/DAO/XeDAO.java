@@ -111,4 +111,9 @@ public class XeDAO extends AbstractDAO< Xe , String>{
         JdbcHelper.update(sql_Update, soLuong, maXe);
     }
     
+    public void updateSoLuongPN(String maXe, int soLuong){
+        String sql_Update = "Update Xe Set soluong=soluong + ? where maxe=?";
+        JdbcHelper.update(sql_Update, soLuong, maXe);
+    }
+    
 }
