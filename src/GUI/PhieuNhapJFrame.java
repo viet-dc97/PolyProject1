@@ -923,7 +923,7 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         txtTongTienPN.setText("0");
         txtTimKiemPN.setText("");
     }
-    //a
+    //aa
     void clearTablePN() {
         DefaultTableModel model = (DefaultTableModel) tblPhieuNhap.getModel();
         int i = tblPhieuNhap.getSelectedRow();
