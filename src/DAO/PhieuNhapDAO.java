@@ -75,7 +75,7 @@ public class PhieuNhapDAO extends AbstractDAO<PhieuNhap, String>{
     protected PhieuNhap readFromResultSet(ResultSet rs) {
         PhieuNhap entity = new PhieuNhap();
         try {
-            entity.setMaPhieuNhap(rs.getInt("maphieunhap"));
+            entity.setMaPhieuNhap(rs.getString("maphieunhap"));
             entity.setMaNv(rs.getString("manv"));
             entity.setMaNcc(rs.getString("mancc"));
             entity.setNgayNhap(rs.getDate("ngaynhap"));

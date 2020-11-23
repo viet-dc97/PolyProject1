@@ -21,7 +21,7 @@ public class JdbcHelper {
     static String driver = "com.mysql.jdbc.Driver";
     static String url = "jdbc:mysql://localhost:3306/qlxemay";
     static String user = "root";
-    static String password = "";
+    static String password = "12345678";
     static {
         try{
             Class.forName(driver);

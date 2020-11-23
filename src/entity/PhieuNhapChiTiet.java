@@ -10,7 +10,7 @@ package entity;
  * @author ADMIN
  */
 public class PhieuNhapChiTiet {
-    private int maPhieuNhap;
+    private String maPhieuNhap;
     private String maXe ;
     private int soLuong;
     private double giaNhap;
@@ -18,18 +18,18 @@ public class PhieuNhapChiTiet {
     public PhieuNhapChiTiet() {
     }
 
-    public PhieuNhapChiTiet(int maPhieuNhap, String maXe, int soLuong, double giaNhap) {
+    public PhieuNhapChiTiet(String maPhieuNhap, String maXe, int soLuong, double giaNhap) {
         this.maPhieuNhap = maPhieuNhap;
         this.maXe = maXe;
         this.soLuong = soLuong;
         this.giaNhap = giaNhap;
     }
 
-    public int getMaPhieuNhap() {
+    public String getMaPhieuNhap() {
         return maPhieuNhap;
     }
 
-    public void setMaPhieuNhap(int maPhieuNhap) {
+    public void setMaPhieuNhap(String maPhieuNhap) {
         this.maPhieuNhap = maPhieuNhap;
     }
 
@@ -56,5 +56,7 @@ public class PhieuNhapChiTiet {
     public void setGiaNhap(double giaNhap) {
         this.giaNhap = giaNhap;
     }
+
+    
     
 }
