@@ -70,7 +70,6 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         tblPhieuNhap = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jButton13 = new javax.swing.JButton();
-        btnLuuPN = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtTongTienPN = new javax.swing.JTextField();
@@ -93,12 +92,12 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         cboNhaccPN = new javax.swing.JComboBox<>();
         txtThanhTienPN = new javax.swing.JTextField();
         cboMaXePN = new javax.swing.JComboBox<>();
-        jpnSoLuongPN = new javax.swing.JSpinner();
         lblDonGiaPN = new javax.swing.JLabel();
         lblMauXePN = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         txtMaPN = new javax.swing.JTextField();
         jpnNgayNhapPN = new com.toedter.calendar.JDateChooser();
+        jpnSoLuongPN = new com.toedter.components.JSpinField();
         jPanel7 = new javax.swing.JPanel();
         btnInsertPN = new javax.swing.JButton();
         btnUpdatePN = new javax.swing.JButton();
@@ -180,15 +179,6 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         jButton13.setText("Thêm nhà cung cấp");
         jPanel3.add(jButton13);
 
-        btnLuuPN.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnLuuPN.setText("Lưu phiếu nhập");
-        btnLuuPN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLuuPNActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnLuuPN);
-
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -262,17 +252,6 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
             }
         });
 
-        jpnSoLuongPN.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jpnSoLuongPNStateChanged(evt);
-            }
-        });
-        jpnSoLuongPN.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jpnSoLuongPNPropertyChange(evt);
-            }
-        });
-
         lblDonGiaPN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblDonGiaPN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDonGiaPN.setEnabled(false);
@@ -291,6 +270,12 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         jpnNgayNhapPN.setDateFormatString("MMMMM dd, yyyy");
         jpnNgayNhapPN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        jpnSoLuongPN.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jpnSoLuongPNPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -307,10 +292,9 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(cboMaNvPN, 0, 127, Short.MAX_VALUE)
-                                        .addComponent(cboMaXePN, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cboMaNvPN, 0, 127, Short.MAX_VALUE)
+                                    .addComponent(cboMaXePN, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jpnSoLuongPN, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -383,14 +367,18 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
                         .addComponent(lblMauXePN, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtThanhTienPN, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblDonGiaPN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addComponent(jLabel8)
-                        .addComponent(jpnSoLuongPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtThanhTienPN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                            .addComponent(lblDonGiaPN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel8)))
+                        .addGap(6, 6, 6))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jpnSoLuongPN, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         btnInsertPN.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -402,7 +390,12 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         });
 
         btnUpdatePN.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        btnUpdatePN.setText("Cập nhật phiếu nhập");
+        btnUpdatePN.setText("Lưu phiếu nhập");
+        btnUpdatePN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdatePNActionPerformed(evt);
+            }
+        });
 
         btnDeletePN.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnDeletePN.setText("Xóa phiếu nhập");
@@ -484,7 +477,7 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
@@ -499,7 +492,7 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -576,18 +569,6 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboMaXePNItemStateChanged
 
-    private void jpnSoLuongPNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jpnSoLuongPNStateChanged
-        try {
-            int soLuong = Integer.parseInt(jpnSoLuongPN.getValue().toString());
-            double donGia = Double.parseDouble(lblDonGiaPN.getText());
-            double thanhTien = soLuong * donGia;
-        
-            txtThanhTienPN.setText(String.valueOf(thanhTien));
-        } catch (Exception e) {
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jpnSoLuongPNStateChanged
-
     private void btnInsertPNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertPNActionPerformed
         
         try {
@@ -598,22 +579,6 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInsertPNActionPerformed
-
-    private void jpnSoLuongPNPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jpnSoLuongPNPropertyChange
-    
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jpnSoLuongPNPropertyChange
-
-    private void btnLuuPNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuPNActionPerformed
-        try {
-            luuPN();
-            luuPNCT();
-            DialogHelper.alert(this, "Lưu phiếu nhập thành công");
-        } catch (Exception e) {
-            DialogHelper.alert(this, "Lưu phiếu nhập thất bại");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLuuPNActionPerformed
 
     private void tblPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuNhapMouseClicked
         if (evt.getClickCount() == 1) {
@@ -661,6 +626,29 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemPNKeyPressed
 
+    private void btnUpdatePNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePNActionPerformed
+        try {
+            luuPN();
+            luuPNCT();
+            DialogHelper.alert(this, "Lưu phiếu nhập thành công");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lưu phiếu nhập thất bại");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdatePNActionPerformed
+
+    private void jpnSoLuongPNPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jpnSoLuongPNPropertyChange
+        try {
+            int soLuong = jpnSoLuongPN.getValue();
+            double donGia = Double.parseDouble(lblDonGiaPN.getText());
+            double thanhTien = soLuong * donGia;
+
+            txtThanhTienPN.setText(String.valueOf(thanhTien));
+        } catch (Exception e) {
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jpnSoLuongPNPropertyChange
+
     /**
      * @param args the command line arguments
      */
@@ -699,7 +687,6 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletePN;
     private javax.swing.JButton btnInsertPN;
-    private javax.swing.JButton btnLuuPN;
     private javax.swing.JButton btnNewPN;
     private javax.swing.JButton btnUpdatePN;
     private javax.swing.JComboBox<String> cboMaNvPN;
@@ -749,7 +736,7 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private com.toedter.calendar.JDateChooser jpnNgayNhapPN;
-    private javax.swing.JSpinner jpnSoLuongPN;
+    private com.toedter.components.JSpinField jpnSoLuongPN;
     private javax.swing.JLabel lblDonGiaPN;
     private javax.swing.JLabel lblMauXePN;
     private javax.swing.JLabel lblTenNvPN;
@@ -965,13 +952,10 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         }
     }
     
-//    void showDetail(int index){
-//        int n = tblPhieuNhap.getRowCount();
-//        PhieuNhap pn = new PhieuNhap();
-//        for (int i = 0; i < n; i++) {
-//            pn.setMaPhieuNhap((String) tblPhieuNhap.getValueAt(i, 0));
-//            pn.setMaNcc((String) tblPhieuNhap.getValueAt(i, 5));
-//            
-//        }
-//    }
+    boolean check(){
+        if (jpnSoLuongPN.getValue() == 0) {
+            
+        }
+        return true;
+    }
 }
