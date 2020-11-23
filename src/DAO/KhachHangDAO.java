@@ -81,16 +81,24 @@ public class KhachHangDAO extends AbstractDAO<KhachHang, String> {
     protected KhachHang readFromResultSet(ResultSet rs) {
         KhachHang entity = new KhachHang();
         try {
-            entity.setMaKh(rs.getString("makh"));
-            entity.setHoTen(rs.getString("hoten"));
-            entity.setGioiTinh(rs.getBoolean("gioitinh"));
-            entity.setDiaChi(rs.getString("diachi"));
-            entity.setSoDt(rs.getString("sodt"));
+            entity.setMaKh(rs.getString(1));
+            entity.setHoTen(rs.getString(2));
+            entity.setGioiTinh(rs.getBoolean(3));
+            entity.setDiaChi(rs.getString(4));
+            entity.setSoDt(rs.getString(5));
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
         return entity;   
     }
-
+    public List<KhachHang> selectByTenKH(String hoTen) {
+        String sql = " SELECT * FROM khachhang WHERE hoten like ? ";
+        return selectBySql(sql, "%"+hoTen+"%");
+    }
+    public KhachHang selectByTen(String tenKh) {
+        String sql = "SELECT * FROM khachhang WHERE hoten like ?";
+        List<KhachHang> list = selectBySql(sql, tenKh);
+        return list.size() > 0 ? list.get(0) : null;
+    }
 }
