@@ -45,6 +45,7 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
     NhaCungCapDAO nccDAO = new NhaCungCapDAO();
     PhieuNhapDAO pnDAO = new PhieuNhapDAO();
     PhieuNhapChiTietDAO pnctDAO = new PhieuNhapChiTietDAO();
+    int index = 0;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -615,9 +616,10 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLuuPNActionPerformed
 
     private void tblPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuNhapMouseClicked
-        if(evt.getClickCount() == 1){ 
-                
-            }
+        if (evt.getClickCount() == 1) {
+            deletePN();
+            deletePNCT();
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_tblPhieuNhapMouseClicked
@@ -963,10 +965,13 @@ public class PhieuNhapJFrame extends javax.swing.JFrame {
         }
     }
     
-    void showDetail(int index){
-        PhieuNhap pn = new PhieuNhap();
-        txtMaPN.setText(pn.getMaPhieuNhap());
-        cboMaNvPN.setSelectedItem(pn.getMaNv());
-    }
-    
+//    void showDetail(int index){
+//        int n = tblPhieuNhap.getRowCount();
+//        PhieuNhap pn = new PhieuNhap();
+//        for (int i = 0; i < n; i++) {
+//            pn.setMaPhieuNhap((String) tblPhieuNhap.getValueAt(i, 0));
+//            pn.setMaNcc((String) tblPhieuNhap.getValueAt(i, 5));
+//            
+//        }
+//    }
 }
