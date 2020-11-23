@@ -12,7 +12,7 @@ import java.util.Date;
  * @author ADMIN
  */
 public class PhieuNhap {
-    private int maPhieuNhap ;
+    private String maPhieuNhap ;
     private String maNv ;
     private String maNcc ;
     private Date ngayNhap ;
@@ -21,7 +21,7 @@ public class PhieuNhap {
     public PhieuNhap() {
     }
 
-    public PhieuNhap(int maPhieuNhap, String maNv, String maNcc, Date ngayNhap, double tongTien) {
+    public PhieuNhap(String maPhieuNhap, String maNv, String maNcc, Date ngayNhap, double tongTien) {
         this.maPhieuNhap = maPhieuNhap;
         this.maNv = maNv;
         this.maNcc = maNcc;
@@ -29,11 +29,11 @@ public class PhieuNhap {
         this.tongTien = tongTien;
     }
 
-    public int getMaPhieuNhap() {
+    public String getMaPhieuNhap() {
         return maPhieuNhap;
     }
 
-    public void setMaPhieuNhap(int maPhieuNhap) {
+    public void setMaPhieuNhap(String maPhieuNhap) {
         this.maPhieuNhap = maPhieuNhap;
     }
 
@@ -68,5 +68,7 @@ public class PhieuNhap {
     public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
+
+    
     
 }
